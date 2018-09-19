@@ -1,4 +1,4 @@
-import {Card} from "./card";
+import {Card} from './card';
 
 export class Deck {
   public cards: Card[] = [];
@@ -16,11 +16,11 @@ export class Deck {
    */
   public getFreshDeck() {
     // console.log("Generating fresh deck");
-    let newDeck: Card[] = [];
+    const newDeck: Card[] = [];
 
     suitsList.forEach(function (suit) {
       valuesList.forEach(function (value) {
-        let card: Card = new Card(value.key + suit.key, value.value);
+        const card: Card = new Card(value.key + suit.key, value.value);
         newDeck.push(card);
       });
     });
@@ -35,7 +35,7 @@ export class Deck {
 
     for (let r = 0; r < this.shuffleTimes; r++) {
       this.cards = this.shuffleCards(this.cards);
-      let newCards: Card[] = this.cards;
+      const newCards: Card[] = this.cards;
     }
     // this.printDeck();
   }
@@ -47,9 +47,9 @@ export class Deck {
    * @returns {Card[]}
    */
   private shuffleCards(cards: Card[]): Card[] {
-    let shuffledCards: Card[] = [];
+    const shuffledCards: Card[] = [];
     let card: Card;
-    for(let i = 0; i < cards.length; i) {
+    for (const i = 0; i < cards.length; i) {
       card = cards.splice(this.getRandomNum(cards.length), 1)[0];
       shuffledCards.push(card);
     }
@@ -62,19 +62,18 @@ export class Deck {
    */
   public getLine(): string {
     // TODO: implement the spychic hand in a service so we can call it from here.
-    // TODO: service must return info taking discardUsedCards variable into account
     // check if we have enough cards in the deck for a full hand
     if (this.cards.length < this.handSize) {
       this.getFreshDeck();
       this.shuffleDeck();
     }
     let inputLine: string = '';
-    let cardsLeft: Card[] = this.cards.slice();
+    const cardsLeft: Card[] = this.cards.slice();
 
     let card: Card;
     // first 5 cards, the players hand is given randomly
     for (let i = 0; i < 5; i++) {
-      if (inputLine != '') {
+      if (inputLine !== '') {
         inputLine += ' ';
       }
       card = cardsLeft.splice(this.getRandomNum(cardsLeft.length), 1)[0];
@@ -88,13 +87,8 @@ export class Deck {
       inputLine += card.getLabel();
     }
 
-    if (this.discardUsedCards == true) {
-      this.cards = cardsLeft;
-      // TODO: after calculating the best hand possible for the line we need to bring back any unused cards to the top of the deck. Because those cards wouldn't be taken
-    } else {
-      // resuffle the deck so the hands dealt seem more random. Right now the 5 deck cards don't change much from line to line
-      this.shuffleDeck();
-    }
+    // resuffle the deck so the hands dealt seem more random. otherwise the 5 deck cards don't change much from line to line
+    this.shuffleDeck();
 
     return inputLine;
   }
@@ -114,12 +108,12 @@ export class Deck {
   public printDeck() {
     let inputLine: string = '';
     for (let i = 0; i < this.cards.length; i++) {
-      if (inputLine != '') {
+      if (inputLine !== '') {
         inputLine += ' ';
       }
       inputLine += this.cards[i].getLabel();
     }
-    console.log("printing deck:",this.cards.length,inputLine);
+    console.log('printing deck:', this.cards.length, inputLine);
   }
 }
 
