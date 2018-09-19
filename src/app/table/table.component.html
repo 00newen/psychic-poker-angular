@@ -1,0 +1,12 @@
+<div class="settings">
+  <div>
+    <label for="nHands">Number of hands to show:</label><input type="number" name="nHands" [(ngModel)]="numberOfHands" (change)="redealGame($eve)">
+  </div>
+  <div>
+    <label for="showBestHand">Show winning cards:</label><input type="checkbox" name="showBestHand" [(ngModel)]="showBestHand">
+  </div>
+</div>
+
+<div class="lines">
+  <app-psychic-hand *ngFor="let line of lines" [cardsLine]="line" [showBestHand]="showBestHand">{{ line }}</app-psychic-hand>
+</div>
